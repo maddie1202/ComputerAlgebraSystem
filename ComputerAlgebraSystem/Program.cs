@@ -1,10 +1,7 @@
-﻿using Antlr4.Runtime;
-using ComputerAlgrebraSystem.Grammar;
-using ComputerAlgrebraSystem.Model;
+﻿using ComputerAlgrebraSystem.Model;
 using ComputerAlgrebraSystem.Model.BinaryTree;
 using ComputerAlgrebraSystem.Utils;
 using System;
-using System.IO;
 
 namespace ComputerAlgrebraSystem
 {

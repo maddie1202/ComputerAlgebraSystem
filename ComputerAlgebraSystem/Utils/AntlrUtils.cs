@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Antlr4.Runtime;
-using ComputerAlgrebraSystem.Grammar;
+﻿using Antlr4.Runtime;
+using ComputerAlgebraSystem.Grammar;
 using System.IO;
-using ComputerAlgrebraSystem.Model;
 
 namespace ComputerAlgrebraSystem.Utils
 {

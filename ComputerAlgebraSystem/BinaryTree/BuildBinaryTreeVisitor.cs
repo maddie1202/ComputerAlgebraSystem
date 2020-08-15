@@ -1,5 +1,5 @@
 ﻿using Antlr4.Runtime.Misc;
-using ComputerAlgrebraSystem.Grammar;
+using ComputerAlgebraSystem.Grammar;
 using Fractions;
 using System;
 using System.Globalization;

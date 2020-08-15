@@ -2,3 +2,5 @@ packages/*
 .vs/*
 ComputerAlgebraSystem/bin/*
 ComputerAlgebraSystem/obj/*
+ComputerAlgebraSystem.Tests/bin/*
+ComputerAlgebraSystem.Tests/obj/*
