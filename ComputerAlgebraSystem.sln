@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputerAlgrebraSystem", "ComputerAlgrebraSystem\ComputerAlgrebraSystem.csproj", "{8BEEE5BA-2623-4AB1-8B33-89D268B2D6DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputerAlgebraSystem", "ComputerAlgrebraSystem\ComputerAlgebraSystem.csproj", "{8BEEE5BA-2623-4AB1-8B33-89D268B2D6DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerAlgebraSystem.Tests", "ComputerAlgebraSystem.Tests\ComputerAlgebraSystem.Tests.csproj", "{9D9D4D64-61F5-4175-95A6-6BEC79D930C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputerAlgebraSystem.Tests", "ComputerAlgebraSystem.Tests\ComputerAlgebraSystem.Tests.csproj", "{9D9D4D64-61F5-4175-95A6-6BEC79D930C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\ComputerAlgrebraSystem.csproj": {
-                "projectPath": "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\ComputerAlgrebraSystem.csproj"
+              "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\ComputerAlgebraSystem.csproj": {
+                "projectPath": "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\ComputerAlgebraSystem.csproj"
               }
             }
           }
@@ -81,12 +81,12 @@
         }
       }
     },
-    "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\ComputerAlgrebraSystem.csproj": {
+    "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\ComputerAlgebraSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\ComputerAlgrebraSystem.csproj",
-        "projectName": "ComputerAlgrebraSystem",
-        "projectPath": "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\ComputerAlgrebraSystem.csproj",
+        "projectUniqueName": "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\ComputerAlgebraSystem.csproj",
+        "projectName": "ComputerAlgebraSystem",
+        "projectPath": "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\ComputerAlgebraSystem.csproj",
         "packagesPath": "C:\\Users\\madel\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\madel\\source\\repos\\ComputerAlgebraSystem\\ComputerAlgrebraSystem\\obj\\",
         "projectStyle": "PackageReference",

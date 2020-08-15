@@ -1,6 +1,0 @@
-C:\Users\madel\source\repos\ComputerAlgebraSystem\ComputerAlgrebraSystem\obj\Debug\netcoreapp3.1\MathLexer.cs
-C:\Users\madel\source\repos\ComputerAlgebraSystem\ComputerAlgrebraSystem\obj\Debug\netcoreapp3.1\MathParser.cs
-C:\Users\madel\source\repos\ComputerAlgebraSystem\ComputerAlgrebraSystem\obj\Debug\netcoreapp3.1\MathListener.cs
-C:\Users\madel\source\repos\ComputerAlgebraSystem\ComputerAlgrebraSystem\obj\Debug\netcoreapp3.1\MathBaseListener.cs
-C:\Users\madel\source\repos\ComputerAlgebraSystem\ComputerAlgrebraSystem\obj\Debug\netcoreapp3.1\MathVisitor.cs
-C:\Users\madel\source\repos\ComputerAlgebraSystem\ComputerAlgrebraSystem\obj\Debug\netcoreapp3.1\MathBaseVisitor.cs

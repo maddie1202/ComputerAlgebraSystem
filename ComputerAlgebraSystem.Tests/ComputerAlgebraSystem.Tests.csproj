@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ComputerAlgrebraSystem\ComputerAlgrebraSystem.csproj" />
+    <ProjectReference Include="..\ComputerAlgrebraSystem\ComputerAlgebraSystem.csproj" />
   </ItemGroup>
 
 </Project>
