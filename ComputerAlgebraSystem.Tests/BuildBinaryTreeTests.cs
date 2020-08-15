@@ -1,7 +1,7 @@
-using NUnit.Framework;
-using Fractions;
 using ComputerAlgrebraSystem.Utils;
 using ComputerAlgrebraSystem.Model.BinaryTree;
+using NUnit.Framework;
+using Fractions;
 
 namespace ComputerAlgebraSystem.Tests
 {
