@@ -3,10 +3,10 @@ using System.Runtime.CompilerServices;
 
 namespace ComputerAlgrebraSystem.Model
 {
-    public class Variable
+    public class Variable : Multiplier
     {
         public char Symbol { get; set; }
-        public Constant Degree { get; set; } = 1;
+        public RationalNumber Degree { get; set; } = 1;
 
         public override string ToString() => Symbol.ToString();
     }

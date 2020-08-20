@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ComputerAlgrebraSystem.Model
 {
-    public class Expression
+    public class Expression : Multiplier
     {
         private readonly List<Term> terms = new List<Term>();
         public IEnumerable<Term> Terms 
@@ -17,6 +17,8 @@ namespace ComputerAlgrebraSystem.Model
                 }
             }
         }
+        public RationalNumber Degree => 1;
+
 
         public Expression(Expression expression)
         {

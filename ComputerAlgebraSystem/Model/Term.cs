@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -6,6 +7,11 @@ using System.Text;
 
 namespace ComputerAlgrebraSystem.Model
 {
+    public interface Multiplier
+    {
+        RationalNumber Degree { get; }
+    }
+
     public class Term
     {
         private readonly List<IrrationalNumber> IrrationalNumbers = new List<IrrationalNumber>();
@@ -26,6 +32,51 @@ namespace ComputerAlgrebraSystem.Model
         }
         public Term()
         {
+        }
+
+        public bool IsConstant(out Constant constant)
+        {
+            if (PowerOperations.Count > 0
+                || Functions.Count > 0
+                || Variables.Count > 0
+                || Expressions.Count > 0)
+            {
+                constant = default;
+                return false;
+            }
+
+            if (RationalNumbers.Count == 0 && IrrationalNumbers.Count == 0)
+            {
+                constant = 1;
+                return true;
+            }
+
+            if (RationalNumbers.Count > 0 && IrrationalNumbers.Count == 0)
+            {
+                constant = RationalNumbers.Single();
+            }
+
+            if (RationalNumbers.Count == 0 && IrrationalNumbers.Count > 0)
+            {
+                constant = IrrationalNumbers.Single();
+            }
+
+            throw new NotImplementedException("Can't handle a constant " +
+                "composed of rational and irrational numbers. 5e for example");
+        }
+
+        private List<Multiplier> GetAllMultipliers()
+        {
+            var multipliers = new List<Multiplier>();
+
+            multipliers.AddRange(IrrationalNumbers);
+            multipliers.AddRange(RationalNumbers);
+            multipliers.AddRange(PowerOperations);
+            multipliers.AddRange(Functions);
+            multipliers.AddRange(Variables);
+            multipliers.AddRange(Expressions);
+
+            return multipliers;
         }
 
         public Term Multiply(Term term)
@@ -130,23 +181,28 @@ namespace ComputerAlgrebraSystem.Model
             return Expressions.Count != 0;
         }
 
+
         public override string ToString()
         {
             Simplify();
 
-            var stringBuilder = new StringBuilder();
+            var numeratorMultipliers = GetAllMultipliers().Where(x => x.Degree.Number >= 0);
+            var denominatorMultipliers = GetAllMultipliers().Where(x => x.Degree.Number < 0);
 
-            stringBuilder.Append(RationalNumbers.Aggregate("", (acc, x) => acc + x + " * "));
-            stringBuilder.Append(IrrationalNumbers.Aggregate("", (acc, x) => acc + x + " * "));
-            stringBuilder.Append(PowerOperations.Aggregate("", (acc, x) => acc + x + " * "));
-            stringBuilder.Append(Functions.Aggregate("", (acc, x) => acc + x + " * "));
-            stringBuilder.Append(Variables.Aggregate("", (acc, x) => acc + x + " * "));
-            stringBuilder.Append(Expressions.Aggregate("", (acc, x) => acc + "(" + x + ")" + " * "));
+            var numberator = numeratorMultipliers.Aggregate("", (acc, x) => acc + x + " * ");
+            var denominator = denominatorMultipliers.Aggregate("", (acc, x) => acc + x + " * ");
 
             // remove the extra "*" at the end
-            stringBuilder.Remove(stringBuilder.Length - 3, 3);
+            numberator = numberator.Remove(numberator.Length - 3, 3);
+            denominator = denominator.Remove(denominator.Length - 3, 3);
 
-            return stringBuilder.ToString();
+            if (denominatorMultipliers.Count() > 1)
+            {
+                return numberator + " / (" + denominator + ")";
+            }
+
+            return numberator + " / " + denominator;
         }
+
     }
 }

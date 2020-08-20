@@ -1,9 +1,11 @@
 ﻿namespace ComputerAlgrebraSystem.Model
 {
-    public class PowerOperation
+    public class PowerOperation : Multiplier
     {
         public Expression Base { get; set; }
         public Expression Exponent { get; set; }
+
+        public RationalNumber Degree => 1;
 
         public override string ToString()
         {

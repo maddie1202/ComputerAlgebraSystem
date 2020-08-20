@@ -5,10 +5,10 @@ using System.ComponentModel;
 namespace ComputerAlgrebraSystem.Model
 {
 
-    public abstract class IrrationalNumber : Constant
+    public abstract class IrrationalNumber : Constant, Multiplier
     {
         public abstract string Symbol { get; }
-        public Constant Degree { get; set; } = 1;
+        public RationalNumber Degree { get; set; } = 1;
 
         public override string ToString() => Symbol;
     }

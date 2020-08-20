@@ -2,9 +2,11 @@
 
 namespace ComputerAlgrebraSystem.Model
 {
-    public  class RationalNumber : Constant
+    public  class RationalNumber : Constant, Multiplier
     {
         public Fraction Number { get; set; }
+
+        public RationalNumber Degree => 1;
 
         public RationalNumber()
         {

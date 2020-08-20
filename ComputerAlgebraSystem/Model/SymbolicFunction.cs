@@ -1,9 +1,11 @@
 ﻿namespace ComputerAlgrebraSystem.Model
 {
-    public abstract class SymbolicFunction
+    public abstract class SymbolicFunction : Multiplier
     {
         public abstract string FucntionText { get; }
         public Expression Argument { get; set; }
+
+        public RationalNumber Degree => throw new System.NotImplementedException();
 
         public override string ToString()
         {

@@ -42,7 +42,7 @@ namespace ComputerAlgrebraSystem.Model.BinaryTree
     {
     }
 
-    internal class PowerNode : InfixExpressionNode
+    public class PowerNode : InfixExpressionNode
     {
 
     }
