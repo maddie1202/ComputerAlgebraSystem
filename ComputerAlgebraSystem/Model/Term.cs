@@ -2,23 +2,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace ComputerAlgrebraSystem.Model
 {
     public interface Multiplier
     {
         RationalNumber Degree { get; }
+        Multiplier Reciprocal();
     }
 
     public class Term
     {
-        private readonly List<IrrationalNumber> IrrationalNumbers = new List<IrrationalNumber>();
-        private readonly List<RationalNumber> RationalNumbers = new List<RationalNumber>();
-        private readonly List<PowerOperation> PowerOperations = new List<PowerOperation>();
-        private readonly List<SymbolicFunction> Functions = new List<SymbolicFunction>();
-        private readonly List<Variable> Variables = new List<Variable>();
+        private List<IrrationalNumber> IrrationalNumbers = new List<IrrationalNumber>();
+        private List<RationalNumber> RationalNumbers = new List<RationalNumber>();
+        private List<PowerOperation> PowerOperations = new List<PowerOperation>();
+        private List<SymbolicFunction> Functions = new List<SymbolicFunction>();
+        private List<Variable> Variables = new List<Variable>();
         private List<Expression> Expressions = new List<Expression>();
 
         public Term(Term term)
@@ -32,6 +36,11 @@ namespace ComputerAlgrebraSystem.Model
         }
         public Term()
         {
+        }
+
+        public Term(Multiplier multiplier)
+        {
+            Multiply((dynamic)multiplier);
         }
 
         public bool IsConstant(out Constant constant)
@@ -89,7 +98,12 @@ namespace ComputerAlgrebraSystem.Model
         public Term Multiply(params Expression[] expressions)
         {
             var newTerm = new Term(this);
-            newTerm.Expressions.AddRange(expressions);
+
+            foreach (var expression in expressions)
+            {
+                newTerm.MultiplyByAny(expression.Cast());
+            }
+
             return newTerm;
         }
 
@@ -145,6 +159,42 @@ namespace ComputerAlgrebraSystem.Model
             Expressions.AddRange(term.Expressions);
         }
 
+        private void MultiplyByAny(dynamic obj)
+        {
+            if (obj is Term term)
+            {
+                MulltiplyTerm(term);
+            }
+            else if (obj is IrrationalNumber irrationalNumber)
+            {
+                IrrationalNumbers.Add(irrationalNumber);
+            }
+            else if (obj is RationalNumber rationalNumber)
+            {
+                RationalNumbers.Add(rationalNumber);
+            }
+            else if (obj is PowerOperation powerOperation)
+            {
+                PowerOperations.Add(powerOperation);
+            }
+            else if (obj is SymbolicFunction function)
+            {
+                Functions.Add(function);
+            }
+            else if (obj is Variable variable)
+            {
+                Variables.Add(variable);
+            }
+            else if (obj is Expression expression)
+            {
+                Expressions.Add(expression);
+            }
+            else
+            {
+                throw new Exception("Cannot muplity by type " + obj.GetType());
+            }
+        }
+
         private void DivideExpression(Expression expression)
         {
             var term = new Term();
@@ -158,22 +208,35 @@ namespace ComputerAlgrebraSystem.Model
 
         public void Simplify()
         {
-            var newExpressions = new List<Expression>();
-            var expressionsCopy = new List<Expression>(Expressions);
+            SimplifyPowerOperations();
+            SimplifyRationalNumbers();
+        }
 
-            foreach (var expression in expressionsCopy)
+        private void SimplifyRationalNumbers()
+        {
+            var rationalNumber = RationalNumbers.Aggregate<RationalNumber, Fraction>(1, (acc, x) => acc * x.Number);
+            RationalNumbers = new List<RationalNumber>();
+
+            if (rationalNumber != 1) RationalNumbers.Add(rationalNumber);
+        }
+
+        private void SimplifyPowerOperations()
+        {
+            var newPowerOperations = new List<PowerOperation>();
+
+            foreach (var powerOperation in PowerOperations)
             {
-                if (expression.Terms.Count() == 1)
+                try
                 {
-                    MulltiplyTerm(expression.Terms.Single());
+                    RationalNumbers.Add(powerOperation.CastToRationalNumber());
                 }
-                else
+                catch
                 {
-                    newExpressions.Add(expression);
+                    newPowerOperations.Add(powerOperation);
                 }
             }
 
-            Expressions = newExpressions;
+            PowerOperations = newPowerOperations;
         }
 
         public bool HasNestedExpressions()
@@ -181,27 +244,40 @@ namespace ComputerAlgrebraSystem.Model
             return Expressions.Count != 0;
         }
 
+        public dynamic Cast()
+        {
+            var multipliers = GetAllMultipliers();
+
+            if (multipliers.Count != 1) return this;
+
+            return multipliers.Single();
+        }
 
         public override string ToString()
         {
-            Simplify();
-
             var numeratorMultipliers = GetAllMultipliers().Where(x => x.Degree.Number >= 0);
-            var denominatorMultipliers = GetAllMultipliers().Where(x => x.Degree.Number < 0);
+            var denominatorMultipliers = GetAllMultipliers().Where(x => x.Degree.Number < 0)
+                .Select(x => x.Reciprocal());
 
-            var numberator = numeratorMultipliers.Aggregate("", (acc, x) => acc + x + " * ");
+            var numerator = numeratorMultipliers.Aggregate("", (acc, x) => acc + x + " * ");
             var denominator = denominatorMultipliers.Aggregate("", (acc, x) => acc + x + " * ");
 
             // remove the extra "*" at the end
-            numberator = numberator.Remove(numberator.Length - 3, 3);
+            numerator = numerator.Remove(numerator.Length - 3, 3);
+
+            if (denominator.Equals(""))
+            {
+                return numerator;
+            }
+
             denominator = denominator.Remove(denominator.Length - 3, 3);
 
             if (denominatorMultipliers.Count() > 1)
             {
-                return numberator + " / (" + denominator + ")";
+                return numerator + " / (" + denominator + ")";
             }
 
-            return numberator + " / " + denominator;
+            return numerator + " / " + denominator;
         }
 
     }

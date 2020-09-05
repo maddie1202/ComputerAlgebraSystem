@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ComputerAlgrebraSystem.Model
@@ -7,6 +8,7 @@ namespace ComputerAlgrebraSystem.Model
     public class Expression : Multiplier
     {
         private readonly List<Term> terms = new List<Term>();
+
         public IEnumerable<Term> Terms 
         { 
             get
@@ -17,12 +19,11 @@ namespace ComputerAlgrebraSystem.Model
                 }
             }
         }
-        public RationalNumber Degree => 1;
-
+        public RationalNumber Degree { get; private set; } = 1;
 
         public Expression(Expression expression)
         {
-            terms.AddRange(expression.Terms);
+            terms.AddRange(new List<Term>(expression.Terms));
         }
         
         public Expression(Term term)
@@ -47,6 +48,11 @@ namespace ComputerAlgrebraSystem.Model
         {
         }
 
+        public Expression(Multiplier multiplier)
+        {
+            terms.Add(new Term(multiplier));
+        }
+
         public Expression AddTerm(Term term)
         {
             var expression = new Expression(this);
@@ -59,6 +65,23 @@ namespace ComputerAlgrebraSystem.Model
             var expression = new Expression(this);
             expression.terms.AddRange(terms);
             return expression;
+        }
+
+        public void Simplify()
+        {
+            foreach (var term in terms)
+            {
+                term.Simplify();
+            }
+        }
+
+        public dynamic Cast()
+        {
+            if (terms.Count != 1) return this;
+
+            var term = terms.Single();
+
+            return term.Cast();
         }
 
         public override string ToString()
@@ -75,6 +98,13 @@ namespace ComputerAlgrebraSystem.Model
             stringBuilder.Remove(stringBuilder.Length - 3, 3); 
 
             return stringBuilder.ToString();
+        }
+
+        public Multiplier Reciprocal()
+        {
+            var newExpression = new Expression(this);
+            newExpression.Degree = Degree.Number * -1;
+            return newExpression;
         }
     }
 }

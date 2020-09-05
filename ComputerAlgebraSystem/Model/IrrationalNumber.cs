@@ -10,6 +10,8 @@ namespace ComputerAlgrebraSystem.Model
         public abstract string Symbol { get; }
         public RationalNumber Degree { get; set; } = 1;
 
+        public abstract Multiplier Reciprocal();
+
         public override string ToString() => Symbol;
     }
 
@@ -21,6 +23,11 @@ namespace ComputerAlgrebraSystem.Model
         {
             return Math.Pow(2.71828182846, Degree.ToDouble());
         }
+
+        public override Multiplier Reciprocal()
+        {
+            return new IrrationalNumberE() { Degree = Degree.Number * -1 };
+        }
     }
 
     public class IrrationalNumberPi : IrrationalNumber
@@ -30,6 +37,11 @@ namespace ComputerAlgrebraSystem.Model
         public override double ToDouble()
         {
             return Math.Pow(3.14159265359, Degree.ToDouble());
+        }
+         
+        public override Multiplier Reciprocal()
+        {
+            return new IrrationalNumberPi() { Degree = Degree.Number * -1 };
         }
     }
 

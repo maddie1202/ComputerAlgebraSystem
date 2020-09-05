@@ -1,4 +1,6 @@
 ﻿using Fractions;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace ComputerAlgrebraSystem.Model
 {
@@ -27,7 +29,6 @@ namespace ComputerAlgrebraSystem.Model
             return new RationalNumber { Number = value };
         }
 
-
         public RationalNumber(int numerator, int denominator)
         {
             Number = new Fraction(numerator, denominator);
@@ -40,7 +41,14 @@ namespace ComputerAlgrebraSystem.Model
 
         public override string ToString()
         {
+            if (Number == 0) return "0";
+
             return Number.ToString();
+        }
+
+        public Multiplier Reciprocal()
+        {
+            return new RationalNumber { Number = 1 / Number};
         }
     }
 }

@@ -14,23 +14,23 @@ namespace ComputerAlgrebraSystem
                 Console.Write("> ");
                 var exprText = Console.ReadLine();
 
-                if (string.IsNullOrWhiteSpace(exprText))
-                    break;
+                if (string.IsNullOrWhiteSpace(exprText)) break;
 
                 var parser = AntlrUtils.GetParser(exprText);
 
-                try
-                {
+                //try
+                //{
                     var cst = parser.compileUnit();
                     var ast = new BuildBinaryTreeVisitor().VisitCompileUnit(cst);
                     var expr = new BuildExpressionVisitor().Visit((ExpressionNode)ast);
+                    expr.Simplify();
 
                     Console.WriteLine(expr.ToString());
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine(ex);
+                //}
 
                 Console.WriteLine();
             }

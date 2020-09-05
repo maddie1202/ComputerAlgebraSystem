@@ -5,7 +5,12 @@
         public abstract string FucntionText { get; }
         public Expression Argument { get; set; }
 
-        public RationalNumber Degree => throw new System.NotImplementedException();
+        public RationalNumber Degree => 1;
+
+        public Multiplier Reciprocal()
+        {
+            throw new System.NotImplementedException();
+        }
 
         public override string ToString()
         {
