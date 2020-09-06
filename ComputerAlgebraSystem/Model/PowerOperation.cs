@@ -26,14 +26,10 @@ namespace ComputerAlgrebraSystem.Model
         public RationalNumber CastToRationalNumber()
         {
             if (Base.Cast() is RationalNumber _base && 
-                Exponent.Cast() is RationalNumber exponent)
+                Exponent.Cast() is RationalNumber exponent &&
+                exponent.IsInteger())
             {
-                var exponentDouble = exponent.ToDouble();
-
-                if (Math.Floor(exponentDouble) == Math.Ceiling(exponentDouble))
-                {
-                    return Fraction.Pow(_base.Number, exponent.Number.ToInt32());
-                }
+                return Fraction.Pow(_base.Number, exponent.Number.ToInt32());
             }
 
             throw new InvalidCastException("Cannot cast " + ToString() + " to a rational number.");

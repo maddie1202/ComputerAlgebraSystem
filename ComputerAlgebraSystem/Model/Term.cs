@@ -208,7 +208,9 @@ namespace ComputerAlgrebraSystem.Model
 
         public void Simplify()
         {
+            SimplifyExpressions();
             SimplifyPowerOperations();
+            SimplifyVariables();
             SimplifyRationalNumbers();
         }
 
@@ -226,6 +228,9 @@ namespace ComputerAlgrebraSystem.Model
 
             foreach (var powerOperation in PowerOperations)
             {
+                powerOperation.Base.Simplify();
+                powerOperation.Exponent.Simplify();
+
                 try
                 {
                     RationalNumbers.Add(powerOperation.CastToRationalNumber());
@@ -239,6 +244,31 @@ namespace ComputerAlgrebraSystem.Model
             PowerOperations = newPowerOperations;
         }
 
+        private void SimplifyVariables()
+        {
+            var variableGroups = Variables.GroupBy(x => x.Symbol);
+
+            var newVariables = new List<Variable>();
+
+            foreach (var variableGroup in variableGroups)
+            {
+                var degreeSum = variableGroup
+                    .Aggregate<Variable, Fraction>(0, (acc, x) => acc + x.Degree.Number);
+
+                newVariables.Add(new Variable { Symbol = variableGroup.Key, Degree = degreeSum });
+            }
+
+            Variables = newVariables;
+        }
+
+        private void SimplifyExpressions()
+        {
+            foreach (var expression in Expressions)
+            {
+                expression.Simplify();
+            }
+        }
+
         public bool HasNestedExpressions()
         {
             return Expressions.Count != 0;
@@ -248,7 +278,7 @@ namespace ComputerAlgrebraSystem.Model
         {
             var multipliers = GetAllMultipliers();
 
-            if (multipliers.Count != 1) return this;
+            if (multipliers.Count != 1) throw new InvalidCastException();
 
             return multipliers.Single();
         }

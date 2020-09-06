@@ -79,9 +79,14 @@ namespace ComputerAlgrebraSystem.Model
         {
             if (terms.Count != 1) return this;
 
-            var term = terms.Single();
-
-            return term.Cast();
+            try
+            {
+                return terms.Single().Cast();
+            }
+            catch
+            {
+                return this;
+            }
         }
 
         public override string ToString()

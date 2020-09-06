@@ -1,4 +1,5 @@
 ﻿using Fractions;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -22,6 +23,16 @@ namespace ComputerAlgrebraSystem.Model
         public static implicit operator RationalNumber(Fraction fraction)
         {
             return new RationalNumber { Number = fraction };
+        }
+
+        public bool IsInteger()
+        {
+            return Math.Floor(Number.ToDouble()) == Math.Ceiling(Number.ToDouble());
+        }
+
+        public static implicit operator Fraction(RationalNumber rationalNumber)
+        {
+            return rationalNumber.Number;
         }
 
         public static implicit operator RationalNumber(int value)

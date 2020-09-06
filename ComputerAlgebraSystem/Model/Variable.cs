@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
 using System.Runtime.CompilerServices;
 
 namespace ComputerAlgrebraSystem.Model
@@ -13,6 +14,19 @@ namespace ComputerAlgrebraSystem.Model
             return new Variable { Symbol = Symbol, Degree = Degree.Number * -1 };
         }
 
-        public override string ToString() => Symbol.ToString();
+        public override string ToString()
+        {
+            if (Degree.Number == 1)
+            {
+                return Symbol.ToString();
+            }
+
+            if (Degree.IsInteger())
+            {
+                return Symbol.ToString() + "^" + Degree.ToString();
+            }
+
+            return Symbol.ToString() + "^(" + Degree.ToString() + ")";
+        }
     }
 }
