@@ -237,7 +237,14 @@ namespace ComputerAlgrebraSystem.Model
                 }
                 catch
                 {
-                    newPowerOperations.Add(powerOperation);
+                    try
+                    {
+                        Variables.Add(powerOperation.CastToVariable());
+                    }
+                    catch
+                    {
+                        newPowerOperations.Add(powerOperation);
+                    }
                 }
             }
 

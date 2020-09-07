@@ -15,7 +15,7 @@ namespace ComputerAlgrebraSystem.Model
             {
                 Multiplier multiplier = Exponent.Cast();
                 return multiplier.Degree;
-            } 
+            }
         }
 
         public Multiplier Reciprocal()
@@ -33,6 +33,17 @@ namespace ComputerAlgrebraSystem.Model
             }
 
             throw new InvalidCastException("Cannot cast " + ToString() + " to a rational number.");
+        }
+
+        public Variable CastToVariable()
+        {
+            if (Base.Cast() is Variable variable && 
+                Exponent.Cast() is RationalNumber rationalNumber)
+            {
+                return new Variable { Symbol = variable.Symbol, Degree = variable.Degree * rationalNumber.Number };
+            }
+
+            throw new InvalidCastException("Cannot cast " + ToString() + " to a variable.");
         }
 
         public override string ToString()
