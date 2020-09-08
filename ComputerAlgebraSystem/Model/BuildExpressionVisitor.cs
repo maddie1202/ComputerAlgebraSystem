@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ComputerAlgrebraSystem.Model
 {
-    class BuildExpressionVisitor : BinaryTreeNodeVisitor<Expression>
+    public class BuildExpressionVisitor : BinaryTreeNodeVisitor<Expression>
     {
         public override Expression Visit(AdditionNode node)
         {

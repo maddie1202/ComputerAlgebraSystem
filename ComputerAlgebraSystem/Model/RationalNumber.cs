@@ -1,11 +1,12 @@
-﻿using Fractions;
+﻿using ComputerAlgebraSystem.Model;
+using Fractions;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 
 namespace ComputerAlgrebraSystem.Model
 {
-    public  class RationalNumber : Constant, Multiplier
+    public  class RationalNumber : Constant, IMultiplier
     {
         public Fraction Number { get; set; }
 
@@ -57,9 +58,21 @@ namespace ComputerAlgrebraSystem.Model
             return Number.ToString();
         }
 
-        public Multiplier Reciprocal()
+        public IMultiplier Reciprocal()
         {
             return new RationalNumber { Number = 1 / Number};
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is RationalNumber rationalNumber)) return false;
+
+            return Number.Equals(rationalNumber.Number);
+        }
+
+        public override int GetHashCode()
+        {
+            return Number.GetHashCode();
         }
     }
 }

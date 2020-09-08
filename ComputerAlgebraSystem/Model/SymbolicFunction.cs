@@ -1,13 +1,15 @@
-﻿namespace ComputerAlgrebraSystem.Model
+﻿using ComputerAlgebraSystem.Model;
+
+namespace ComputerAlgrebraSystem.Model
 {
-    public abstract class SymbolicFunction : Multiplier
+    public abstract class SymbolicFunction : IMultiplier
     {
         public abstract string FucntionText { get; }
         public Expression Argument { get; set; }
 
         public RationalNumber Degree => 1;
 
-        public Multiplier Reciprocal()
+        public IMultiplier Reciprocal()
         {
             throw new System.NotImplementedException();
         }

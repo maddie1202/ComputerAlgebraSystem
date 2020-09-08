@@ -1,24 +1,21 @@
-﻿using Fractions;
+﻿using ComputerAlgebraSystem.Model;
+using Fractions;
 using System;
 using System.Data;
 
 namespace ComputerAlgrebraSystem.Model
 {
-    public class PowerOperation : Multiplier
+    public class PowerOperation : IMultiplier
     {
         public Expression Base { get; set; }
         public Expression Exponent { get; set; }
 
         public RationalNumber Degree
-        { 
-            get
-            {
-                Multiplier multiplier = Exponent.Cast();
-                return multiplier.Degree;
-            }
+        {
+            get => Exponent.Cast().Degree;
         }
 
-        public Multiplier Reciprocal()
+        public IMultiplier Reciprocal()
         {
             return new PowerOperation { Base = new Expression(Base), Exponent = new Expression(Exponent.Reciprocal()) };
         }

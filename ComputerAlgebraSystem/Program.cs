@@ -23,7 +23,7 @@ namespace ComputerAlgrebraSystem
                     var cst = parser.compileUnit();
                     var ast = new BuildBinaryTreeVisitor().VisitCompileUnit(cst);
                     var expr = new BuildExpressionVisitor().Visit((ExpressionNode)ast);
-                    expr.Simplify();
+                    //expr.Simplify();
 
                     Console.WriteLine(expr.ToString());
                 //}

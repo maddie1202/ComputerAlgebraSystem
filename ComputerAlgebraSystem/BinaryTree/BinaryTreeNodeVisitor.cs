@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ComputerAlgrebraSystem.Model.BinaryTree
 {
-    internal abstract class BinaryTreeNodeVisitor<T>
+    public abstract class BinaryTreeNodeVisitor<T>
     {
         public abstract T Visit(AdditionNode node);
         public abstract T Visit(SubtractionNode node);

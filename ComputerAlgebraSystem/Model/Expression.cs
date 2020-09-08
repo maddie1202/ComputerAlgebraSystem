@@ -1,115 +1,63 @@
-﻿using System;
+﻿using ComputerAlgebraSystem.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ComputerAlgrebraSystem.Model
 {
-    public class Expression : Multiplier
+    public class Expression : IComponent
     {
-        private readonly List<Term> terms = new List<Term>();
-
-        public IEnumerable<Term> Terms 
-        { 
-            get
-            {
-                foreach (var term in terms)
-                {
-                    yield return term;
-                }
-            }
-        }
-        public RationalNumber Degree { get; private set; } = 1;
-
-        public Expression(Expression expression)
-        {
-            terms.AddRange(new List<Term>(expression.Terms));
-        }
-        
-        public Expression(Term term)
-        {
-            terms.Add(term);
-        }
-
-        public Expression(int value)
-        {
-            terms.Add(new Term(value));
-        }
-
-        public Expression(params IEnumerable<Term>[] newTermCollection)
-        {
-            foreach (var newTerms in newTermCollection)
-            {
-                terms.AddRange(newTerms);
-            }
-        }
+        private List<IComponent> components = new List<IComponent>();
+        public IEnumerable<IComponent> Components => components.AsEnumerable();
 
         public Expression()
         {
         }
 
-        public Expression(Multiplier multiplier)
+        public Expression(params IComponent[] components) : this((IEnumerable<IComponent>)components)
         {
-            terms.Add(new Term(multiplier));
         }
 
-        public Expression AddTerm(Term term)
+        public Expression(IEnumerable<IComponent> components)
         {
-            var expression = new Expression(this);
-            expression.terms.Add(term);
-            return expression;
+            this.components = components.ToList();
         }
 
-        public Expression AddTerms(IEnumerable<Term> terms)
+        public Expression DeepCopy()
         {
-            var expression = new Expression(this);
-            expression.terms.AddRange(terms);
-            return expression;
+            return new Expression(new List<IComponent>(components));
         }
 
-        public void Simplify()
+        public IComponent Add(IComponent other)
         {
-            foreach (var term in terms)
-            {
-                term.Simplify();
-            }
-        }
-
-        public dynamic Cast()
-        {
-            if (terms.Count != 1) return this;
-
-            try
-            {
-                return terms.Single().Cast();
-            }
-            catch
-            {
-                return this;
-            }
-        }
-
-        public override string ToString()
-        {
-            var stringBuilder = new StringBuilder();
-
-            foreach (var term in Terms)
-            {
-                stringBuilder.Append(term.ToString());
-                stringBuilder.Append(" + ");
-            }
-
-            // remove the extra "+" at the end
-            stringBuilder.Remove(stringBuilder.Length - 3, 3); 
-
-            return stringBuilder.ToString();
-        }
-
-        public Multiplier Reciprocal()
-        {
-            var newExpression = new Expression(this);
-            newExpression.Degree = Degree.Number * -1;
+            var newExpression = DeepCopy();
+            newExpression.components.Add(other);
             return newExpression;
+        }
+
+        public IComponent Subtract(IComponent other)
+        {
+            var newExpression = DeepCopy();
+            //newExpression.components.Add(other.Multiply(-1));
+            return newExpression;
+        }
+
+        public IComponent Multiply(IComponent other)
+        {
+            return new Expression(new Term(this, other));
+        }
+
+        public IComponent Divide(IComponent other)
+        {
+            return new Expression(new Term(this, other.Reciprocal()));
+        }
+
+        public IComponent Reciprocal()
+        {
+            throw new NotImplementedException();
         }
     }
 }
